@@ -3,209 +3,782 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML Tags Demo</title>
+  <title>Aethelgard — RPG Client Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #070b12;
+      --bg-surface: #0f1724;
+      --bg-card: #141e2e;
+      --bg-card-hover: #1a2640;
+      --border: #1e2d45;
+      --border-bright: #2a4060;
+      --text: #edf2f7;
+      --text-muted: #8899b4;
+      --text-dim: #5a6e8a;
+      --cyan: #22d3ee;
+      --cyan-glow: rgba(34, 211, 238, 0.12);
+      --purple: #a78bfa;
+      --purple-glow: rgba(167, 139, 250, 0.12);
+      --gold: #fbbf24;
+      --green: #22c55e;
+      --red: #ef4444;
+      --orange: #f97316;
+      --hp-safe: #22c55e;
+      --hp-warn: #eab308;
+      --hp-danger: #ef4444;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-deep);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ========== HERO ========== */
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 20%, rgba(34, 211, 238, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 30% 80%, rgba(167, 139, 250, 0.05) 0%, transparent 60%),
+        linear-gradient(180deg, #070b12 0%, #0a1422 40%, #0c1a2e 70%, #070b12 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(2px 2px at 15% 30%, rgba(255, 255, 255, 0.15), transparent),
+        radial-gradient(2px 2px at 45% 15%, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 70% 45%, rgba(255, 255, 255, 0.12), transparent),
+        radial-gradient(2px 2px at 90% 20%, rgba(255, 255, 255, 0.08), transparent),
+        radial-gradient(2px 2px at 25% 70%, rgba(255, 255, 255, 0.1), transparent),
+        radial-gradient(2px 2px at 60% 80%, rgba(255, 255, 255, 0.06), transparent),
+        radial-gradient(2px 2px at 80% 60%, rgba(255, 255, 255, 0.09), transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--cyan);
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #f0f9ff 0%, #22d3ee 50%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 1.25rem auto 2.25rem;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #0891b2);
+      color: #070b12;
+      box-shadow: 0 0 30px rgba(34, 211, 238, 0.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 50px rgba(34, 211, 238, 0.4);
+    }
+
+    .btn-primary.pulsing {
+      animation: pulse-glow 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px rgba(34, 211, 238, 0.25); }
+      50% { box-shadow: 0 0 55px rgba(34, 211, 238, 0.5); }
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-bright);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--text-muted);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-dim);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .hero-scroll:hover {
+      color: var(--text-muted);
+    }
+
+    .hero-scroll .arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      animation: bounce-arrow 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce-arrow {
+      0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.6; }
+      50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+    }
+
+    /* ========== SECTION HEADERS ========== */
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    /* ========== ROSTER ========== */
+
+    #roster {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-surface) 100%);
+    }
+
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 0.85rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-bright);
+      box-shadow: 0 12px 40px rgba(34, 211, 238, 0.06);
+      background: var(--bg-card-hover);
+    }
+
+    .card.fallen {
+      filter: grayscale(1);
+    }
+
+    .card.fallen .card-avatar {
+      filter: brightness(0.5);
+    }
+
+    .card.fallen:hover {
+      filter: grayscale(0.85);
+    }
+
+    .card-avatar {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #0c1424;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .card:not(.fallen):hover .card-avatar img {
+      transform: scale(1.07);
+    }
+
+    .card-avatar .overlay-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      backdrop-filter: blur(6px);
+    }
+
+    .overlay-badge.alive {
+      background: rgba(34, 197, 94, 0.18);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .overlay-badge.fallen-badge {
+      background: rgba(239, 68, 68, 0.25);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.9rem;
+    }
+
+    .card-fallen-stamp {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .card-fallen-stamp span {
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      color: rgba(239, 68, 68, 0.35);
+      text-shadow: 0 0 40px rgba(239, 68, 68, 0.2);
+      transform: rotate(-18deg);
+      border: 4px solid rgba(239, 68, 68, 0.25);
+      padding: 0.3rem 1.2rem;
+      border-radius: 0.3rem;
+      backdrop-filter: blur(2px);
+    }
+
+    .card-body {
+      padding: 1.2rem 1.2rem 1.4rem;
+    }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.7rem;
+      gap: 0.75rem;
+    }
+
+    .card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.3;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .class-badge {
+      flex-shrink: 0;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .hp-section {
+      margin-bottom: 0.85rem;
+    }
+
+    .hp-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .hp-track {
+      height: 7px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .hp-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.6s ease;
+    }
+
+    .hp-fill.safe { background: linear-gradient(90deg, #16a34a, var(--hp-safe)); }
+    .hp-fill.warning { background: linear-gradient(90deg, #ca8a04, var(--hp-warn)); }
+    .hp-fill.danger { background: linear-gradient(90deg, #dc2626, var(--hp-danger)); }
+
+    .skills-head {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+    }
+
+    .skills-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .skill-chip {
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 0.15rem 0.55rem;
+      border-radius: 0.3rem;
+      background: rgba(34, 211, 238, 0.07);
+      color: var(--cyan);
+      border: 1px solid rgba(34, 211, 238, 0.14);
+    }
+
+    /* ========== FEATURES ========== */
+
+    #features {
+      background: var(--bg-deep);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 0.85rem;
+      padding: 2rem 1.75rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-bright);
+      box-shadow: 0 8px 30px rgba(34, 211, 238, 0.05);
+      background: var(--bg-card-hover);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border-bright);
+    }
+
+    .feature-icon.cyan {
+      background: rgba(34, 211, 238, 0.1);
+      color: var(--cyan);
+    }
+
+    .feature-icon.purple {
+      background: rgba(167, 139, 250, 0.1);
+      color: var(--purple);
+    }
+
+    .feature-icon.gold {
+      background: rgba(251, 191, 36, 0.1);
+      color: var(--gold);
+    }
+
+    .feature-icon.orange {
+      background: rgba(249, 115, 22, 0.1);
+      color: var(--orange);
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    /* ========== FOOTER ========== */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    footer code {
+      color: var(--cyan);
+      font-size: 0.85rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+
+    @media (max-width: 640px) {
+      .hero {
+        min-height: 90vh;
+        padding: 4rem 1.25rem 3rem;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .section {
+        padding: 3rem 0;
+      }
+
+      .roster-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-avatar {
+        height: 170px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Header & Navigation -->
-  <header>
-    <h1>HTML Tags Demo</h1>
-    <nav>
-      <ul>
-        <li><a href="#text">Text</a></li>
-        <li><a href="#lists">Lists</a></li>
-        <li><a href="#media-section">Media</a></li>
-        <li><a href="#table">Table</a></li>
-        <li><a href="#form">Form</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span></span>
+        Now in Open Beta
+      </div>
+      <h1 class="hero-title">Aethelgard</h1>
+      <p class="hero-sub">
+        Forge your legend in a realm of ancient magic, brutal combat, and
+        uncharted frontiers. The fate of the shards awaits.
+      </p>
+      <div class="hero-buttons">
+        <a href="#roster" class="btn btn-primary pulsing">&#9654; Play Now</a>
+        <a href="#" class="btn btn-secondary">&#128196; Patch Notes</a>
+      </div>
+    </div>
+    <a href="#roster" class="hero-scroll">
+      <span>Explore</span>
+      <div class="arrow"></div>
+    </a>
+  </section>
 
-  <!-- Main Content -->
-  <main>
+  <!-- ===== ROSTER ===== -->
+  <section class="section" id="roster">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">&#9876; Heroes</span>
+        <h2 class="section-title">Character Roster</h2>
+        <p class="section-desc">
+          Every champion currently roaming the realm.
+        </p>
+      </div>
+      <div class="roster-grid" id="rosterGrid"></div>
+    </div>
+  </section>
 
-    <!-- Introduction -->
-    <section>
-      <h2>Welcome</h2>
-      <p>This page demonstrates commonly used <strong>HTML tags</strong> in a single document. It is built with <em>no CSS or JavaScript</em> — just pure HTML.</p>
-      <p>Use the navigation above to jump to different sections.<br>Each section highlights a different category of tags.</p>
-      <hr>
-    </section>
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">&#9881; Gameplay</span>
+        <h2 class="section-title">Core Features</h2>
+        <p class="section-desc">
+          What awaits you beyond the threshold.
+        </p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon cyan">&#9876;</div>
+          <h3>Epic Raids</h3>
+          <p>
+            Rally your party and descend into shadow-infested citadels.
+            Face colossal bosses with unique mechanics and claim legendary
+            loot only the brave deserve.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon purple">&#9878;</div>
+          <h3>PvP Arena</h3>
+          <p>
+            Test your build against real opponents in ranked arena combat.
+            Climb the leaderboards through duels, 3v3 skirmishes, and
+            seasonal tournaments.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon gold">&#127758;</div>
+          <h3>Open World</h3>
+          <p>
+            Traverse a seamless continent of dense forests, arid deserts,
+            and floating isles. Discover hidden dungeons, rare resources,
+            and ancient lore on every horizon.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon orange">&#9889;</div>
+          <h3>Skill Crafting</h3>
+          <p>
+            Combine runes and essences to forge your own abilities. Every
+            class has free-form skill slots — create synergies no manual
+            ever predicted.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    <!-- Text Elements -->
-    <section id="text">
-      <article>
-        <h2>Text Elements</h2>
-        <h3>Headings &amp; Paragraphs</h3>
-        <p>This is a standard paragraph. Below you can see headings from <code>&lt;h1&gt;</code> down to <code>&lt;h6&gt;</code>.</p>
-        <h1>Heading 1</h1>
-        <h2>Heading 2</h2>
-        <h3>Heading 3</h3>
-        <h4>Heading 4</h4>
-        <h5>Heading 5</h5>
-        <h6>Heading 6</h6>
-
-        <h3>Inline Text Tags</h3>
-        <p><strong>Strong</strong> importance, <em>emphasis</em>, <small>small text</small>, and <code>inline code</code>.</p>
-
-        <h3>Blockquote</h3>
-        <blockquote cite="https://developer.mozilla.org/en-US/docs/Web/HTML">
-          HTML (HyperText Markup Language) is the most basic building block of the Web. It defines the meaning and structure of web content.
-        </blockquote>
-
-        <h3>Preformatted Text</h3>
-        <pre>
-function greet(name) {
-  return "Hello, " + name + "!";
-}
-        </pre>
-      </article>
-    </section>
-
-    <hr>
-
-    <!-- Lists -->
-    <section id="lists">
-      <h2>Lists</h2>
-
-      <h3>Ordered List</h3>
-      <ol>
-        <li>First item</li>
-        <li>Second item</li>
-        <li>Third item</li>
-      </ol>
-
-      <h3>Unordered List</h3>
-      <ul>
-        <li>Apples</li>
-        <li>Bananas</li>
-        <li>Cherries</li>
-      </ul>
-
-      <h3>Description List</h3>
-      <dl>
-        <dt>HTML</dt>
-        <dd>HyperText Markup Language</dd>
-        <dt>CSS</dt>
-        <dd>Cascading Style Sheets</dd>
-        <dt>JS</dt>
-        <dd>JavaScript</dd>
-      </dl>
-    </section>
-
-    <hr>
-
-    <!-- Links & Images -->
-    <section id="media-section">
-      <h2>Links &amp; Images</h2>
-
-      <h3>Link</h3>
-      <p>Visit <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML documentation</a> to learn more.</p>
-
-      <h3>Image with Figure</h3>
-      <figure>
-        <img src="https://via.placeholder.com/400x200" alt="Placeholder image showing a 400 by 200 rectangle">
-        <figcaption>A placeholder image with a width of 400 and height of 200 pixels.</figcaption>
-      </figure>
-    </section>
-
-    <hr>
-
-    <!-- Table -->
-    <section id="table">
-      <h2>Table</h2>
-      <table>
-        <caption>Sample Student Grades</caption>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Subject</th>
-            <th>Grade</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Alice</td>
-            <td>Math</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td>Bob</td>
-            <td>Science</td>
-            <td>B+</td>
-          </tr>
-          <tr>
-            <td>Carol</td>
-            <td>History</td>
-            <td>A-</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <hr>
-
-    <!-- Form -->
-    <section id="form">
-      <h2>Sample Form</h2>
-      <form>
-        <fieldset>
-          <legend>Personal Information</legend>
-
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name"><br><br>
-
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email"><br><br>
-
-          <label for="age">Age:</label>
-          <input type="number" id="age" name="age" min="0"><br><br>
-
-          <label for="country">Country:</label>
-          <select id="country" name="country">
-            <option value="">-- Select --</option>
-            <option value="us">United States</option>
-            <option value="uk">United Kingdom</option>
-            <option value="ca">Canada</option>
-          </select><br><br>
-
-          <label for="bio">Bio:</label><br>
-          <textarea id="bio" name="bio" rows="4" cols="40"></textarea><br><br>
-
-          <button type="submit">Submit</button>
-        </fieldset>
-      </form>
-    </section>
-
-    <hr>
-
-    <!-- Audio & Video -->
-    <section>
-      <h2>Media Tags</h2>
-
-      <h3>Audio</h3>
-      <audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-        Your browser does not support the audio element.
-      </audio>
-
-      <h3>Video</h3>
-      <video controls width="400" src="https://www.w3schools.com/html/mov_bbb.mp4">
-        Your browser does not support the video element.
-      </video>
-    </section>
-
-  </main>
-
-  <!-- Aside -->
-  <aside>
-    <h2>Did You Know?</h2>
-    <p>HTML stands for <em>HyperText Markup Language</em>. It was first created by Tim Berners-Lee in 1991.</p>
-  </aside>
-
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <p><small>&copy; 2026 HTML Tags Demo. Built with only HTML.</small></p>
+    <div class="container">
+      <p>Powered by <code>characterDatabase</code> &middot; Art by the realm</p>
+    </div>
   </footer>
+
+  <script src="my-object.js"></script>
+  <script>
+    (function () {
+      var STYLES = {
+        Paladin:      { set: 1, color: '#fbbf24', bg: 'rgba(251,191,36,0.12)',  border: 'rgba(251,191,36,0.3)' },
+        Assassin:     { set: 2, color: '#a78bfa', bg: 'rgba(167,139,250,0.12)', border: 'rgba(167,139,250,0.3)' },
+        Mage:         { set: 3, color: '#22d3ee', bg: 'rgba(34,211,238,0.12)',  border: 'rgba(34,211,238,0.3)' },
+        Berserker:    { set: 4, color: '#ef4444', bg: 'rgba(239,68,68,0.12)',   border: 'rgba(239,68,68,0.3)' },
+        Archer:       { set: 2, color: '#4ade80', bg: 'rgba(74,222,128,0.12)',  border: 'rgba(74,222,128,0.3)' },
+        Cleric:       { set: 4, color: '#fef3c7', bg: 'rgba(254,243,199,0.12)', border: 'rgba(254,243,199,0.3)' },
+        Necromancer:  { set: 3, color: '#c084fc', bg: 'rgba(192,132,252,0.12)', border: 'rgba(192,132,252,0.3)' },
+        Monk:         { set: 4, color: '#fb923c', bg: 'rgba(251,146,60,0.12)',  border: 'rgba(251,146,60,0.3)' },
+        'Death Knight': { set: 1, color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', border: 'rgba(148,163,184,0.3)' },
+        Valkyrie:     { set: 2, color: '#e2e8f0', bg: 'rgba(226,232,240,0.12)', border: 'rgba(226,232,240,0.3)' }
+      };
+
+      function styleOf(className) {
+        return STYLES[className] || { set: 1, color: '#22d3ee', bg: 'rgba(34,211,238,0.12)', border: 'rgba(34,211,238,0.3)' };
+      }
+
+      function hpClass(hp) {
+        if (hp <= 1200) return 'danger';
+        if (hp <= 1600) return 'warning';
+        return 'safe';
+      }
+
+      function buildCard(c) {
+        var s = styleOf(c.class);
+        var max = 3200;
+        var pct = Math.min((c.hp / max) * 100, 100);
+        var img = 'https://robohash.org/' + encodeURIComponent(c.name) + '?set=set' + s.set + '&size=400x300';
+
+        var el = document.createElement('article');
+        el.className = 'card' + (c.isAlive ? '' : ' fallen');
+
+        var overlayHtml = c.isAlive
+          ? '<span class="overlay-badge alive">\u25CF Alive</span>'
+          : '<span class="overlay-badge fallen-badge">\u2715 FALLEN</span>' +
+            '<div class="card-fallen-stamp"><span>KIA</span></div>';
+
+        el.innerHTML =
+          '<div class="card-avatar">' +
+            '<img src="' + img + '" alt="' + c.name + '" loading="lazy">' +
+            overlayHtml +
+          '</div>' +
+          '<div class="card-body">' +
+            '<div class="card-row">' +
+              '<span class="card-name">' + c.name + '</span>' +
+              '<span class="class-badge" style="color:' + s.color + ';background:' + s.bg + ';border:1px solid ' + s.border + '">' + c.class + '</span>' +
+            '</div>' +
+            '<div class="stat-row">' +
+              '<div class="stat-item"><span class="stat-label">Level</span><span class="stat-value">' + c.level + '</span></div>' +
+              '<div class="stat-item"><span class="stat-label">HP</span><span class="stat-value">' + c.hp + '</span></div>' +
+            '</div>' +
+            '<div class="hp-section">' +
+              '<div class="hp-header"><span>HP</span><span>' + pct.toFixed(0) + '%</span></div>' +
+              '<div class="hp-track"><div class="hp-fill ' + hpClass(c.hp) + '" style="width:' + pct + '%"></div></div>' +
+            '</div>' +
+            '<div class="skills-head">Skills</div>' +
+            '<div class="skills-body">' +
+              c.skills.map(function (sk) { return '<span class="skill-chip">' + sk + '</span>'; }).join('') +
+            '</div>' +
+          '</div>';
+
+        return el;
+      }
+
+      var grid = document.getElementById('rosterGrid');
+      if (grid && typeof characterDatabase !== 'undefined') {
+        characterDatabase.forEach(function (c) { grid.appendChild(buildCard(c)); });
+      }
+    })();
+  </script>
 
 </body>
 </html>
